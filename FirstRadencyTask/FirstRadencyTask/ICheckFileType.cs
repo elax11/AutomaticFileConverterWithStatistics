@@ -2,6 +2,6 @@
 {
     public interface ICheckFileType
     {
-        public void CheckType(string filePath);
+        public FileType GetFileType(string filePath);
     }
 }
