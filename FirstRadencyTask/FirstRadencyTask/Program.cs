@@ -4,7 +4,7 @@ using System;
 using System.Threading.Tasks;
 
 
-namespace MyApp
+namespace FirstRadencyTask
 {
     internal class Program
     {
@@ -14,8 +14,9 @@ namespace MyApp
                 .ConfigureServices(services =>
                 {
                     services.AddHostedService<Worker>();
-                    services.AddSingleton<ifilewatcher, FileWatcher>();
-                    services.AddSingleton<icheckFileType, checkFileType>();
+                    services.AddSingleton<IFileWatcher, FileWatcher>();
+                    services.AddSingleton<IConfiguration, Configuration>();
+                    services.AddTransient<ICheckFileType, CheckFileType>();
                 })
                 .Build();
 
@@ -23,7 +24,7 @@ namespace MyApp
 
             /*var directoryPath = System.Configuration.ConfigurationManager.AppSettings["pathToFolderA"];
             new FileWatcher(directoryPath)
-                .SetFileAddedHandler(filePathName => new checkFileType(filePathName).checktype())
+                .SetFileAddedHandler(filePathName => new checkFileType(filePathName).CheckType())
                 .StartWatching();
             Console.ReadLine();*/
         }

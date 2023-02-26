@@ -1,24 +1,18 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MyApp
+namespace FirstRadencyTask
 {
-    public class FileWatcher : ifilewatcher
+    public class FileWatcher : IFileWatcher
     {
         FileSystemWatcher fileWatcher;
         /*Action<string> action;*/
         string directoryPath;
-        IServiceProvider _serviceProvider;
+        IServiceProvider serviceProvider;
 
-        public FileWatcher(IServiceProvider serviceProvider)
+        public FileWatcher(IServiceProvider serviceProvider, IConfiguration configuration)
         {
-            directoryPath = System.Configuration.ConfigurationManager.AppSettings["pathToFolderA"];
-            fileWatcher = new FileSystemWatcher(directoryPath);
-            _serviceProvider = serviceProvider;
+            fileWatcher = new FileSystemWatcher(configuration.SourcePath);
+            this.serviceProvider = serviceProvider;
         }
         /*
                 public FileWatcher SetFileAddedHandler(Action<string> action)
@@ -38,12 +32,12 @@ namespace MyApp
 
         void FileCreated(object sender, FileSystemEventArgs e)
         {
-            using (var scope = _serviceProvider.CreateScope())
+            serviceProvider.GetRequiredService<ICheckFileType>().CheckType(e.FullPath);
+            /*using (var scope = serviceProvider.CreateScope())
             {
-                var consumerService = scope.ServiceProvider.GetRequiredService
-                                                      <icheckFileType>();
-                consumerService.checktype(e.FullPath);
-            }
+                var consumerService = scope.ServiceProvider.GetRequiredService<ICheckFileType>();
+                consumerService.CheckType(e.FullPath);
+            }*/
         }
     }
 }

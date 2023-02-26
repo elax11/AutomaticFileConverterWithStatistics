@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace MyApp
+﻿namespace FirstRadencyTask
 {
-    public class checkFileType : icheckFileType
+    public class CheckFileType : ICheckFileType
     {
-        string type;
-
-        public void checktype(string filePath)
+        public void CheckType(string filePath)
         {
+            var type = "";
             if (filePath.Substring(filePath.Length - 3) == "txt") type = "txt";
             if (filePath.Substring(filePath.Length - 3) == "scv") type = "scv";
             Console.WriteLine(type);

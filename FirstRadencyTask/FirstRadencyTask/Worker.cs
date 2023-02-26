@@ -1,25 +1,19 @@
 ﻿using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MyApp
+namespace FirstRadencyTask
 {
     public class Worker : BackgroundService
     {
-        public readonly ifilewatcher _ifilewatcher;
+        readonly IFileWatcher filewatcher;
 
-        public Worker(ifilewatcher watcher)
+        public Worker(IFileWatcher watcher)
         {
-            _ifilewatcher = watcher;
+            filewatcher = watcher;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _ifilewatcher.StartWatching();
+            filewatcher.StartWatching();
 
             while (!stoppingToken.IsCancellationRequested)
             {
