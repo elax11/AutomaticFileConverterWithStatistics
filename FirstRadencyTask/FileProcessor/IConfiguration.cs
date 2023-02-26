@@ -1,4 +1,4 @@
-﻿namespace FirstRadencyTask
+﻿namespace FileProcessor
 {
     public interface IConfiguration
     {

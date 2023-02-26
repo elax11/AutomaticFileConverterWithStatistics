@@ -1,6 +1,6 @@
-﻿namespace FirstRadencyTask
+﻿namespace FileProcessor
 {
-    public interface ICheckFileType
+    public interface IFileTypeChecker
     {
         public FileType GetFileType(string filePath);
     }

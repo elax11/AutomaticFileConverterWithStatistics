@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using FileProcessor;
+
 namespace FirstRadencyTask
 {
     internal class Program
@@ -13,7 +15,7 @@ namespace FirstRadencyTask
                     services.AddHostedService<Worker>();
                     services.AddSingleton<IFileWatcher, FileWatcher>();
                     services.AddSingleton<IConfiguration, Configuration>();
-                    services.AddTransient<ICheckFileType, CheckFileType>();
+                    services.AddTransient<IFileTypeChecker, FileTypeChecker>();
                     services.AddScoped<IProcessIncomingFileStrategy, ProcessIncomingFileStrategy>();
                 })
                 .Build();

@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace FirstRadencyTask
+namespace FileProcessor
 {
     public class Configuration : IConfiguration
     {

@@ -1,13 +1,13 @@
-﻿namespace FirstRadencyTask
+﻿namespace FileProcessor
 {
     public class ProcessIncomingFileStrategy: IProcessIncomingFileStrategy
     {
-        ICheckFileType fileTypeChecker;
+        IFileTypeChecker fileTypeChecker;
         ITxtFileReader txtFileReader;
         ICsvFileReader csvFileReader;
         
         public ProcessIncomingFileStrategy(
-            ICheckFileType fileTypeChecker,
+            IFileTypeChecker fileTypeChecker,
             ITxtFileReader txtFileReader,
             ICsvFileReader csvFileReader) 
         {

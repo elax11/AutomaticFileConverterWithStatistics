@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace FirstRadencyTask
+namespace FileProcessor
 {
     public class FileWatcher : IFileWatcher
     {
