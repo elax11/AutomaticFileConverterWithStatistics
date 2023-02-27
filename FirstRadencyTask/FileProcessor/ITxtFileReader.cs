@@ -1,7 +1,6 @@
 ﻿namespace FileProcessor
 {
-    public interface ITxtFileReader
+    public interface ITxtFileReader: IFileReader
     {
-        IEnumerable<string> ReadFile(string fileName);
     }
 }

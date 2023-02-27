@@ -3,17 +3,14 @@
     public class ProcessIncomingFileStrategy: IProcessIncomingFileStrategy
     {
         IFileTypeChecker fileTypeChecker;
-        ITxtFileReader txtFileReader;
-        ICsvFileReader csvFileReader;
+        IFileReaderProvider fileReaderProvider;
         
         public ProcessIncomingFileStrategy(
             IFileTypeChecker fileTypeChecker,
-            ITxtFileReader txtFileReader,
-            ICsvFileReader csvFileReader) 
+            IFileReaderProvider fileReaderProvider) 
         {
             this.fileTypeChecker = fileTypeChecker;
-            this.txtFileReader = txtFileReader;
-            this.csvFileReader = csvFileReader;
+            this.fileReaderProvider = fileReaderProvider;
         }
 
         public void ProcessFile(string fileName)
@@ -21,15 +18,11 @@
             var fileType = fileTypeChecker.GetFileType(fileName);
 
             //(Use switch) readFile
-            IEnumerable<string> fileLines; 
-            switch (fileType)
-            {
-                case FileType.Txt: fileLines = txtFileReader.ReadFile(fileName); 
-                    break;
-                case FileType.Csv: fileLines = csvFileReader.ReadFile(fileName); 
-                    break;
-                default: return;
-            }
+            if (fileType == FileType.Unsupported) return;
+
+            var fileLines = fileReaderProvider.Get(fileType)
+                .ReadFile(fileName);
+            
 
             //Validate
             // if (!validator.Validate(fileLines))

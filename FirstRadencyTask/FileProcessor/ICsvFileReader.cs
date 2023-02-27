@@ -1,7 +1,6 @@
 ﻿namespace FileProcessor
 {
-    public interface ICsvFileReader
+    public interface ICsvFileReader: IFileReader
     {
-        IEnumerable<string> ReadFile(string fileName);
     }
 }
