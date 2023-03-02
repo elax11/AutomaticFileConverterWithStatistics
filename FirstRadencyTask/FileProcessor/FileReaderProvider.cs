@@ -6,7 +6,7 @@
         ICsvFileReader csvFileReader;
 
         public FileReaderProvider(
-            ITxtFileReader txtFileReader, 
+            ITxtFileReader txtFileReader,
             ICsvFileReader csvFileReader)
         {
             this.txtFileReader = txtFileReader;

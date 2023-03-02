@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FileProcessor
+﻿namespace FileProcessor
 {
-    public class TxtFileReader
+    public class TxtFileReader: ITxtFileReader
     {
-
+        public IEnumerable<string> ReadFile(string fileName)
+        {
+            var lines = File.ReadLines(fileName);
+            return lines;
+        }
     }
 }

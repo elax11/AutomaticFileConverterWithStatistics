@@ -8,6 +8,6 @@ namespace FileProcessor
 {
     public interface IValidator
     {
-        bool Validate(IEnumerable<string> fileLines);
+        IEnumerable<TypeAfterParsing> Validate(IEnumerable<RawTypeAfterParsing> fileLines);
     }
 }

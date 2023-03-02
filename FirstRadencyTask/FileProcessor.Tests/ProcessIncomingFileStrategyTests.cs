@@ -1,4 +1,5 @@
 
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 
 namespace FileProcessor.Tests
@@ -8,17 +9,34 @@ namespace FileProcessor.Tests
         IProcessIncomingFileStrategy sut;
         IFileTypeChecker mockFileTypeChecker;
         IFileReaderProvider mockFileReaderProvider;
+        ILogger<ProcessIncomingFileStrategy> mockLogger;
+        IValidator mockValidator;
+        IFileWriter mockFileWriter;
+        IFileReader mockFileReader;
+        IMetaLog mockMetalog;
+        IParser mockParser;
 
         [SetUp]
         public void SetUp()
         {
             mockFileTypeChecker = Substitute.For<IFileTypeChecker>();
             mockFileReaderProvider = Substitute.For<IFileReaderProvider>();
-            sut = new ProcessIncomingFileStrategy(mockFileTypeChecker, mockFileReaderProvider);
+            mockLogger = Substitute.For<ILogger<ProcessIncomingFileStrategy>>();
+            mockValidator = Substitute.For<IValidator>();
+            mockFileWriter = Substitute.For<IFileWriter>();
+            mockFileReader = Substitute.For<IFileReader>();
+            mockMetalog = Substitute.For<IMetaLog>();
+            mockParser = Substitute.For<IParser>();
+            sut = new ProcessIncomingFileStrategy(mockLogger,
+                mockFileTypeChecker,
+                mockFileReaderProvider,
+                mockValidator,
+                mockMetalog,
+                mockParser);
         }
 
         [Test]
-        public void TestProcessUncupportedFileType()
+        public void TestProcessUnsupportedFileType()
         {
             mockFileTypeChecker.GetFileType(Arg.Any<string>())
                 .Returns(FileType.Unsupported);
@@ -29,50 +47,78 @@ namespace FileProcessor.Tests
 
             /*mockFileReaderProvider.DidNotReceiveWithAnyArgs().Get(default);*/
 
-           /* mockFileTypeChecker.GetFileType(Arg.Is("csv"))
-                .Returns(FileType.Csv);
+            /* mockFileTypeChecker.GetFileType(Arg.Is("csv"))
+                 .Returns(FileType.Csv);
 
-            mockFileTypeChecker.GetFileType(Arg.Is<string>(arg => arg == "txt"))
-                .Returns(FileType.Txt);
+             mockFileTypeChecker.GetFileType(Arg.Is<string>(arg => arg == "txt"))
+                 .Returns(FileType.Txt);
 
-            mockFileTypeChecker.GetFileType(default)
-                .ReturnsForAnyArgs(FileType.Unsupported);
+             mockFileTypeChecker.GetFileType(default)
+                 .ReturnsForAnyArgs(FileType.Unsupported);
 
-            mockFileTypeChecker.GetFileType("ads")
-                .ReturnsForAnyArgs(FileType.Unsupported);*/
-        }
-/*
-        [Test]
-        public void ShouldProvideTxtFileReader()
-        {
-            var actual = sut.Get(FileType.Txt);
-
-            Assert.That(actual, Is.InstanceOf<ITxtFileReader>());
+             mockFileTypeChecker.GetFileType("ads")
+                 .ReturnsForAnyArgs(FileType.Unsupported);*/
         }
 
         [Test]
-        public void ShouldProvideCsvFileReader()
+        public void ShouldReturnWithUncupportedFileType()
         {
-            var actual = sut.Get(FileType.Csv);
+            mockFileTypeChecker.GetFileType(Arg.Any<string>())
+                .Returns(FileType.Unsupported);
 
-            Assert.That(actual, Is.InstanceOf<ICsvFileReader>());
+            sut.ProcessFile("");
+
+            mockFileReaderProvider.DidNotReceive().Get(Arg.Any<FileType>());
         }
 
-        [TestCase(FileType.Txt, typeof(ITxtFileReader))]
-        [TestCase(FileType.Csv, typeof(ICsvFileReader))]
-        public void ShouldProvideFileReader(FileType fileType, Type expected)
+        /*[Test]
+        public void ShouldReturnWhenValidationIsFailed()
         {
-            var actual = sut.Get(fileType);
+            mockFileTypeChecker.GetFileType(Arg.Any<string>());
 
-            Assert.That(actual, Is.InstanceOf(expected));
-        }
+            mockFileReaderProvider.Get(Arg.Any<FileType>())
+                .Returns(mockFileReader);
 
-        [TestCase(FileType.Unsupported)]
-        [TestCase((FileType)(-1))]
-        [TestCase((FileType)int.MaxValue)]
-        public void ShouldThrowUnsupported(FileType fileType)
-        {            
-            Assert.Throws<ArgumentException>(() => sut.Get(fileType));
+            mockValidator.Validate(Arg.Any<IEnumerable<string>>())
+                .Returns(false);
+
+            sut.ProcessFile("");
+
+            mockTransformer.DidNotReceive().Transform(Arg.Any<IEnumerable<string>>());
         }*/
+
+        /*
+                [Test]
+                public void ShouldProvideTxtFileReader()
+                {
+                    var actual = sut.Get(FileType.Txt);
+
+                    Assert.That(actual, Is.InstanceOf<ITxtFileReader>());
+                }
+
+                [Test]
+                public void ShouldProvideCsvFileReader()
+                {
+                    var actual = sut.Get(FileType.Csv);
+
+                    Assert.That(actual, Is.InstanceOf<ICsvFileReader>());
+                }
+
+                [TestCase(FileType.Txt, typeof(ITxtFileReader))]
+                [TestCase(FileType.Csv, typeof(ICsvFileReader))]
+                public void ShouldProvideFileReader(FileType fileType, Type expected)
+                {
+                    var actual = sut.Get(fileType);
+
+                    Assert.That(actual, Is.InstanceOf(expected));
+                }
+
+                [TestCase(FileType.Unsupported)]
+                [TestCase((FileType)(-1))]
+                [TestCase((FileType)int.MaxValue)]
+                public void ShouldThrowUnsupported(FileType fileType)
+                {            
+                    Assert.Throws<ArgumentException>(() => sut.Get(fileType));
+                }*/
     }
 }

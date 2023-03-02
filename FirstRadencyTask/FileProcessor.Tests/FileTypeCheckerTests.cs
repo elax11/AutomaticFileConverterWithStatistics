@@ -1,14 +1,18 @@
 
+using NSubstitute;
+
 namespace FileProcessor.Tests
 {
     public class FileTypeCheckerTests
     {
         FileTypeChecker sut;
+        IMetaLog mockMetalog;
 
         [SetUp]
         public void SetUp()
         {
-            sut = new FileTypeChecker();
+            mockMetalog = Substitute.For<IMetaLog>();
+            sut = new FileTypeChecker(mockMetalog);
         }
 
         [TestCase("", FileType.Unsupported)]
