@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FileProcessor
+﻿namespace FileProcessor
 {
     public interface IFileWriter
     {
-        void Save(IEnumerable<string> transformedLine);
+        void Save(IEnumerable<ITransformed> transformedLine);
     }
 }

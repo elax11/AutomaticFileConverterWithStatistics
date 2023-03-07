@@ -15,6 +15,7 @@ namespace FileProcessor.Tests
         IFileReader mockFileReader;
         IMetaLog mockMetalog;
         IParser mockParser;
+        ITransformer mockTransformer;
 
         [SetUp]
         public void SetUp()
@@ -27,12 +28,14 @@ namespace FileProcessor.Tests
             mockFileReader = Substitute.For<IFileReader>();
             mockMetalog = Substitute.For<IMetaLog>();
             mockParser = Substitute.For<IParser>();
+            mockTransformer = Substitute.For<ITransformer>();
             sut = new ProcessIncomingFileStrategy(mockLogger,
                 mockFileTypeChecker,
                 mockFileReaderProvider,
                 mockValidator,
                 mockMetalog,
-                mockParser);
+                mockParser,
+                mockTransformer);
         }
 
         [Test]

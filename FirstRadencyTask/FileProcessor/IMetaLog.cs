@@ -12,5 +12,6 @@ namespace FileProcessor
         int parcedLines { get; set; }
         int foundErrors { get; set; }
         List<string> invalidFiles { get; set; }
+
     }
 }

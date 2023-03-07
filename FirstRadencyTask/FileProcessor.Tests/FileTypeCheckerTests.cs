@@ -12,6 +12,7 @@ namespace FileProcessor.Tests
         public void SetUp()
         {
             mockMetalog = Substitute.For<IMetaLog>();
+            mockMetalog.invalidFiles = new List<string>();
             sut = new FileTypeChecker(mockMetalog);
         }
 

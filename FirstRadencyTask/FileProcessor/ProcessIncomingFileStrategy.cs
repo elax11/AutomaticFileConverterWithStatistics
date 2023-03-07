@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace FileProcessor
 {
@@ -10,6 +12,8 @@ namespace FileProcessor
         IValidator validator;
         IMetaLog metaLog;
         IParser parser;
+        ITransformer transformer;
+        IFileWriter fileWriter;
 
         public ProcessIncomingFileStrategy(
             ILogger<ProcessIncomingFileStrategy> logger,
@@ -17,7 +21,9 @@ namespace FileProcessor
             IFileReaderProvider fileReaderProvider,
             IValidator validator,
             IMetaLog metaLog,
-            IParser parser
+            IParser parser,
+            ITransformer transformer,
+            IFileWriter fileWriter
             )
         {
             this.fileTypeChecker = fileTypeChecker;
@@ -26,6 +32,8 @@ namespace FileProcessor
             this.validator = validator;
             this.metaLog = metaLog;
             this.parser = parser;
+            this.transformer = transformer;
+            this.fileWriter = fileWriter;
         }
 
         public void ProcessFile(string fileName)
@@ -42,6 +50,11 @@ namespace FileProcessor
 
             var filesAfterParse = validator.Validate(rawFilesAfterParse);
 
+            var tranformed = transformer.Transform(filesAfterParse);
+
+            fileWriter.Save(tranformed);
+
+
             foreach (var item in filesAfterParse)
             {
                 /*Console.WriteLine(item.FirstName);
@@ -56,19 +69,6 @@ namespace FileProcessor
                 Console.WriteLine(metaLog.foundErrors);
                 Console.WriteLine(metaLog.invalidFiles);
             }
-
-            //Validate
-            /*if (!validator.Validate(fileLines))
-            {
-                logger.LogInformation("FileLines invalid");
-                return;
-            }*/
-
-
-
-
-            //Transform
-            /*var transformedLines = transformer.Transform(fileLines);*/
 
 
             //Save

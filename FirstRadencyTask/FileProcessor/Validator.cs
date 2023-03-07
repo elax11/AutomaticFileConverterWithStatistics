@@ -43,10 +43,11 @@ namespace FileProcessor
                     validateLines.Last().Date = dataValue;
                     validateLines.Last().AccountNumber = long.Parse(rawItem.AccountNumber);
                     validateLines.Last().Service = rawItem.Service;
+                    validateLines.Last().Valid = true;
                     metaLog.parcedLines++;
                 }
-                if (errors == 0) metaLog.parcedFiles++; 
             }
+            metaLog.parcedFiles++;
             return validateLines;
         }
 
