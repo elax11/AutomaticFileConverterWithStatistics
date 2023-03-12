@@ -6,8 +6,7 @@ namespace FileProcessor
     {
         IConfiguration configuration { get; set; }
         IMetaLog metaLog { get; set; }
-        public FileWriter(IConfiguration configuration,
-            IMetaLog metaLog)
+        public FileWriter(IConfiguration configuration, IMetaLog metaLog)
         {
             this.configuration = configuration;
             this.metaLog = metaLog;
