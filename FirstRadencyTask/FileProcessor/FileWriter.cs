@@ -21,7 +21,7 @@ namespace FileProcessor
             }
 
             string json = JsonConvert.SerializeObject(transformedLine, (Newtonsoft.Json.Formatting)System.Xml.Formatting.Indented);
-            File.WriteAllText($@"{configuration.TargetPath}\{DateTime.Today.ToString("MM/dd/yyyy")}\output{metaLog.parcedFiles}.json", json);
+            File.WriteAllText($@"{configuration.TargetPath}\{DateTime.Today.ToString("MM/dd/yyyy")}\output{metaLog.parsedFiles}.json", json);
         }
     }
 }

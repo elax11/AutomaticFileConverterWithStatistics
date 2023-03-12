@@ -21,7 +21,16 @@ namespace FirstRadencyTask
             }
             string filePath = Path.Combine(currentDirectoryPath, "meta.log");
             File.Create(filePath).Close();
-
+            var sw = new StreamWriter(filePath);
+            sw.WriteLine($"parsed_files:{metaLog.parsedFiles}");
+            sw.WriteLine($"parsed_lines:{metaLog.parsedLines}");
+            sw.WriteLine($"found_errors:{metaLog.foundErrors}");
+            sw.Write("invalid_files:");
+            foreach (var item in metaLog.invalidFiles)
+            {
+                sw.Write($"[{item}]");
+            }
+            sw.Close();
         }
     }
 }

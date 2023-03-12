@@ -44,10 +44,10 @@ namespace FileProcessor
                     validateLines.Last().AccountNumber = long.Parse(rawItem.AccountNumber);
                     validateLines.Last().Service = rawItem.Service;
                     validateLines.Last().Valid = true;
-                    metaLog.parcedLines++;
+                    metaLog.parsedLines++;
                 }
             }
-            metaLog.parcedFiles++;
+            metaLog.parsedFiles++;
             return validateLines;
         }
 

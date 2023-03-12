@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Logging;
 
 namespace FileProcessor
 {
@@ -40,7 +38,6 @@ namespace FileProcessor
         {
             var fileType = fileTypeChecker.GetFileType(fileName);
 
-            //(Use switch) ReadFile
             if (fileType == FileType.Unsupported) return;
 
             var fileLines = fileReaderProvider.Get(fileType)

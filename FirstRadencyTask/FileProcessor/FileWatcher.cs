@@ -23,10 +23,28 @@ namespace FileProcessor
 
         void FileCreated(object sender, FileSystemEventArgs e)
         {
+            WaitForFile(e.FullPath);
             using (var scope = serviceProvider.CreateScope())
             {
                 var consumerService = scope.ServiceProvider.GetRequiredService<IProcessIncomingFileStrategy>();
                 consumerService.ProcessFile(e.FullPath);
+            }
+        }
+        void WaitForFile(string fullPath)
+        {
+            while (true)
+            {
+                try
+                {
+                    using (StreamReader stream = new StreamReader(fullPath))
+                    {
+                        break;
+                    }
+                }
+                catch
+                {
+                    Thread.Sleep(1000);
+                }
             }
         }
     }

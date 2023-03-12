@@ -1,6 +1,4 @@
-﻿using FileProcessor;
-
-namespace FirstRadencyTask
+﻿namespace FirstRadencyTask
 {
     public interface ICreateMidnightFileMeta
     {

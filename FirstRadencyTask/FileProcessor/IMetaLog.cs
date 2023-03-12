@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FileProcessor
+﻿namespace FileProcessor
 {
     public interface IMetaLog
     {
-        int parcedFiles { get; set; }
-        int parcedLines { get; set; }
+        int parsedFiles { get; set; }
+        int parsedLines { get; set; }
         int foundErrors { get; set; }
         List<string> invalidFiles { get; set; }
 

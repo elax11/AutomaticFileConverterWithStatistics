@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace FileProcessor
+﻿namespace FileProcessor
 {
     public class Parser : IParser
     {
